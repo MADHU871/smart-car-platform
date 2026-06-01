@@ -1,19 +1,53 @@
 pipeline {
 
- agent any
+```
+agent any
 
- stages {
+stages {
 
-  stage('Build') {
+    stage('Frontend Install') {
 
-   steps {
+        steps {
 
-    sh 'npm install'
+            dir('frontend') {
 
-   }
+                bat 'npm install'
 
-  }
+            }
 
- }
+        }
+
+    }
+
+    stage('Frontend Build') {
+
+        steps {
+
+            dir('frontend') {
+
+                bat 'npm run build'
+
+            }
+
+        }
+
+    }
+
+    stage('Backend Install') {
+
+        steps {
+
+            dir('backend') {
+
+                bat 'npm install'
+
+            }
+
+        }
+
+    }
+
+}
+```
 
 }
