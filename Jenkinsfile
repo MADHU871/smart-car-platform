@@ -5,6 +5,16 @@ agent any
 
 stages {
 
+    stage('Git Checkout') {
+
+        steps {
+
+            echo 'Source Code Downloaded'
+
+        }
+
+    }
+
     stage('Frontend Install') {
 
         steps {
@@ -44,6 +54,38 @@ stages {
             }
 
         }
+
+    }
+
+    stage('Backend Test') {
+
+        steps {
+
+            dir('backend') {
+
+                bat 'node --version'
+
+                bat 'npm --version'
+
+            }
+
+        }
+
+    }
+
+}
+
+post {
+
+    success {
+
+        echo 'Smart Car Pipeline Success'
+
+    }
+
+    failure {
+
+        echo 'Smart Car Pipeline Failed'
 
     }
 
