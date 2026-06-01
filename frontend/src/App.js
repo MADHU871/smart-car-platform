@@ -2,27 +2,54 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 
 function App() {
+
+  const isLoggedIn =
+    localStorage.getItem("isLoggedIn");
+
   return (
     <BrowserRouter>
 
-      <div style={{ display: "flex" }}>
+      {isLoggedIn ? (
 
-        <Sidebar />
+        <div style={{ display: "flex" }}>
 
-        <div style={{ flex: 1 }}>
-          <Routes>
+          <Sidebar />
 
-            <Route
-              path="/"
-              element={<Dashboard />}
-            />
+          <div style={{ flex: 1 }}>
 
-          </Routes>
+            <Routes>
+
+              <Route
+                path="/"
+                element={<Dashboard />}
+              />
+
+            </Routes>
+
+          </div>
+
         </div>
 
-      </div>
+      ) : (
+
+        <Routes>
+
+          <Route
+            path="/"
+            element={<Login />}
+          />
+
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+        </Routes>
+
+      )}
 
     </BrowserRouter>
   );
