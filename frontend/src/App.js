@@ -1,30 +1,72 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 
-import Sidebar from "./components/Sidebar";
-import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Sidebar from "./components/Sidebar";
+import GPS from "./pages/GPS";
+import Trips from "./pages/Trips";
+import Health from "./pages/Health";
+import Analytics from "./pages/Analytics";
 
 function App() {
 
-  const isLoggedIn =
-    localStorage.getItem("isLoggedIn");
+  const token = localStorage.getItem("token");
 
   return (
+
     <BrowserRouter>
 
-      {isLoggedIn ? (
+      {token ? (
 
-        <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex"
+          }}
+        >
 
           <Sidebar />
 
-          <div style={{ flex: 1 }}>
+          <div
+            style={{
+              flex: 1
+            }}
+          >
 
             <Routes>
 
               <Route
                 path="/"
                 element={<Dashboard />}
+              />
+
+              <Route
+                path="/gps"
+                element={<GPS />}
+              />
+
+              <Route
+                path="/trips"
+                element={<Trips />}
+              />
+
+              <Route
+                path="/health"
+                element={<Health />}
+              />
+
+              <Route
+                path="/analytics"
+                element={<Analytics />}
+              />
+
+              <Route
+                path="*"
+                element={<Navigate to="/" />}
               />
 
             </Routes>
@@ -47,12 +89,19 @@ function App() {
             element={<Login />}
           />
 
+          <Route
+            path="*"
+            element={<Navigate to="/login" />}
+          />
+
         </Routes>
 
       )}
 
     </BrowserRouter>
+
   );
+
 }
 
 export default App;

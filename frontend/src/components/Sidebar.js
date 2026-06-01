@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
 
-  const handleLogout = () => {
+  const logout = () => {
 
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
 
     window.location.reload();
   };
 
   return (
+
     <div
       style={{
         width: "220px",
@@ -19,15 +20,13 @@ function Sidebar() {
         padding: "20px"
       }}
     >
+
       <h2>Smart Car</h2>
 
       <p>
         <Link
           to="/"
-          style={{
-            color: "white",
-            textDecoration: "none"
-          }}
+          style={{ color: "white" }}
         >
           Dashboard
         </Link>
@@ -36,10 +35,7 @@ function Sidebar() {
       <p>
         <Link
           to="/gps"
-          style={{
-            color: "white",
-            textDecoration: "none"
-          }}
+          style={{ color: "white" }}
         >
           GPS Tracking
         </Link>
@@ -48,42 +44,42 @@ function Sidebar() {
       <p>
         <Link
           to="/trips"
-          style={{
-            color: "white",
-            textDecoration: "none"
-          }}
+          style={{ color: "white" }}
         >
-          Trips
+          Trip History
         </Link>
       </p>
 
       <p>
         <Link
           to="/health"
-          style={{
-            color: "white",
-            textDecoration: "none"
-          }}
+          style={{ color: "white" }}
         >
-          Health
+          Vehicle Health
+        </Link>
+      </p>
+
+      <p>
+        <Link
+          to="/analytics"
+          style={{ color: "white" }}
+        >
+          Analytics
         </Link>
       </p>
 
       <hr />
 
       <button
-        onClick={handleLogout}
-        style={{
-          padding: "10px",
-          width: "100%",
-          cursor: "pointer"
-        }}
+        onClick={logout}
       >
         Logout
       </button>
 
     </div>
+
   );
+
 }
 
 export default Sidebar;

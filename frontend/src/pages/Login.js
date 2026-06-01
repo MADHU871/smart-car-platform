@@ -1,41 +1,105 @@
 import { useState } from "react";
+import axios from "axios";
 
 function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
 
-    if (
-      username === "admin" &&
-      password === "admin123"
-    ) {
+    try {
+
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        {
+          username,
+          password
+        }
+      );
+
+      console.log(
+        "JWT TOKEN:",
+        response.data.token
+      );
 
       localStorage.setItem(
-        "isLoggedIn",
-        "true"
+        "token",
+        response.data.token
+      );
+
+      alert(
+        "Login Successful"
       );
 
       window.location.reload();
 
-    } else {
+    } catch (error) {
 
-      alert("Invalid Credentials");
+      console.log(
+        "FULL ERROR"
+      );
+
+      console.log(
+        error
+      );
+
+      console.log(
+        "ERROR RESPONSE"
+      );
+
+      console.log(
+        error.response
+      );
+
+      console.log(
+        "ERROR REQUEST"
+      );
+
+      console.log(
+        error.request
+      );
+
+      if (
+        error.response
+      ) {
+
+        alert(
+          error.response.data.message
+        );
+
+      } else {
+
+        alert(
+          "Login Failed"
+        );
+
+      }
 
     }
+
   };
 
   return (
-    <div style={{ padding: "50px" }}>
 
-      <h1>Smart Car Login</h1>
+    <div
+      style={{
+        padding: "50px"
+      }}
+    >
+
+      <h1>
+        Smart Car Login
+      </h1>
 
       <input
         type="text"
         placeholder="Username"
+        value={username}
         onChange={(e) =>
-          setUsername(e.target.value)
+          setUsername(
+            e.target.value
+          )
         }
       />
 
@@ -45,20 +109,29 @@ function Login() {
       <input
         type="password"
         placeholder="Password"
+        value={password}
         onChange={(e) =>
-          setPassword(e.target.value)
+          setPassword(
+            e.target.value
+          )
         }
       />
 
       <br />
       <br />
 
-      <button onClick={handleLogin}>
+      <button
+        onClick={
+          handleLogin
+        }
+      >
         Login
       </button>
 
     </div>
+
   );
+
 }
 
 export default Login;
