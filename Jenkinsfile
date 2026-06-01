@@ -1,95 +1,59 @@
+
+---
+
+# Correct Jenkinsfile (Windows Jenkins)
+
+Copy this EXACTLY into your `Jenkinsfile`:
+
+```groovy
 pipeline {
 
-```
-agent any
+    agent any
 
-stages {
+    stages {
 
-    stage('Git Checkout') {
+        stage('Frontend Install') {
 
-        steps {
+            steps {
 
-            echo 'Source Code Downloaded'
+                dir('frontend') {
+
+                    bat 'npm install'
+
+                }
+
+            }
 
         }
 
-    }
+        stage('Frontend Build') {
 
-    stage('Frontend Install') {
+            steps {
 
-        steps {
+                dir('frontend') {
 
-            dir('frontend') {
+                    bat 'npm run build'
 
-                bat 'npm install'
+                }
+
+            }
+
+        }
+
+        stage('Backend Install') {
+
+            steps {
+
+                dir('backend') {
+
+                    bat 'npm install'
+
+                }
 
             }
 
         }
 
     }
-
-    stage('Frontend Build') {
-
-        steps {
-
-            dir('frontend') {
-
-                bat 'npm run build'
-
-            }
-
-        }
-
-    }
-
-    stage('Backend Install') {
-
-        steps {
-
-            dir('backend') {
-
-                bat 'npm install'
-
-            }
-
-        }
-
-    }
-
-    stage('Backend Test') {
-
-        steps {
-
-            dir('backend') {
-
-                bat 'node --version'
-
-                bat 'npm --version'
-
-            }
-
-        }
-
-    }
-
-}
-
-post {
-
-    success {
-
-        echo 'Smart Car Pipeline Success'
-
-    }
-
-    failure {
-
-        echo 'Smart Car Pipeline Failed'
-
-    }
-
-}
-```
 
 }
