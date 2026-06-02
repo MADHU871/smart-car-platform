@@ -1,59 +1,19 @@
-
----
-
-# Correct Jenkinsfile (Windows Jenkins)
-
-Copy this EXACTLY into your `Jenkinsfile`:
-
-```groovy
 pipeline {
-
     agent any
 
     stages {
-
-        stage('Frontend Install') {
-
+        stage('Checkout') {
             steps {
-
-                dir('frontend') {
-
-                    bat 'npm install'
-
-                }
-
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/MADHU871/your-repo.git'
             }
-
         }
 
-        stage('Frontend Build') {
-
+        stage('Build') {
             steps {
-
-                dir('frontend') {
-
-                    bat 'npm run build'
-
-                }
-
+                echo 'Building application...'
             }
-
         }
-
-        stage('Backend Install') {
-
-            steps {
-
-                dir('backend') {
-
-                    bat 'npm install'
-
-                }
-
-            }
-
-        }
-
     }
-
 }
